@@ -10,6 +10,8 @@ E-mail: samzong.lu@gmail.com
 """
 
 import base64
+import json
+
 from Crypto.Cipher import AES
 from flask import Flask, request
 from WXBizJsonMsgCrypt import WXBizJsonMsgCrypt
@@ -64,6 +66,12 @@ def qywxbot_callbak():
         print(msg_signature)
 
     return '{}'.format(msg_signature)
+
+
+@app.route('/feishubot/callback', methods=['POST'])
+def feishubot_callback():
+    data = request.get_json()
+    return {"challenge": data['challenge']}
 
 
 if __name__ == '__main__':
